@@ -16,12 +16,6 @@ class HibernateConfig {
         return Persistence.createEntityManagerFactory("hibernate-reactive-example")
     }
 
-    // criteriaBuilder
-    @Bean
-    fun criteriaBuilder(entityManagerFactory: EntityManagerFactory): CriteriaBuilder {
-        return entityManagerFactory.criteriaBuilder
-    }
-
     // session factory
     @Bean
     fun sessionFactory(entityManagerFactory: EntityManagerFactory): Stage.SessionFactory {

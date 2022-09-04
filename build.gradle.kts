@@ -77,7 +77,7 @@ configure(subprojects.filter { it.name !in nonDependentProjects }) {
     tasks.withType<KotlinCompile> {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xjsr305=strict")
-            jvmTarget = "17"
+            jvmTarget = "16"
         }
     }
 

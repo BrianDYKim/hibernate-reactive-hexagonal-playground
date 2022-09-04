@@ -10,7 +10,4 @@ dependencies {
     implementation("org.hibernate.reactive:hibernate-reactive-core:$hibernateReactiveVersion")
     implementation("io.vertx:vertx-mysql-client:$vertxVersion")
     implementation("org.hibernate:hibernate-jpamodelgen")
-
-    // quarkus
-    implementation("io.quarkus:quarkus-spring-di")
 }

@@ -11,7 +11,21 @@ class CustomerRepositoryImpl(
     private val sessionFactory: Stage.SessionFactory
 ) : CustomerRepository {
 
+    // CriteriaBuilder 선언
+    private val criteriaBuilder = sessionFactory.criteriaBuilder
+
     override fun findById(id: Long): Mono<Customer> {
-        TODO("To be implemented!")
+        val query = criteriaBuilder.createQuery(Customer::class.java)
+        val from = query.from(Customer::class.java)
+        val idEquals = criteriaBuilder.equal(from.get<Long>("id"), id)
+
+        query.select(from)
+            .where(idEquals)
+
+        val future = sessionFactory.withSession { session ->
+            session.createQuery(query).singleResult
+        }.toCompletableFuture()
+
+        return Mono.fromFuture(future)
     }
 }

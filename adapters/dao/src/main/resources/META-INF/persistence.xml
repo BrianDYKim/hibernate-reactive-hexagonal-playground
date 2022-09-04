@@ -6,6 +6,8 @@
     <persistence-unit name="hibernate-reactive-example">
         <provider>org.hibernate.reactive.provider.ReactivePersistenceProvider</provider>
 
+        <class>com.example.domain.entity.Customer</class>
+
         <properties>
 
             <!-- MySQL -->
