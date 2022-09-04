@@ -16,7 +16,8 @@ allprojects {
     }
 }
 
-val nonDependentProjects = listOf("commons")
+// commons 내부의 모듈을 제외하고 공통된 의존을 넣어준다
+val nonDependentProjects = listOf("commons", "commons:common")
 configure(subprojects.filter { it.name !in nonDependentProjects }) {
     apply(plugin = "org.springframework.boot")
     apply(plugin = "io.spring.dependency-management")
