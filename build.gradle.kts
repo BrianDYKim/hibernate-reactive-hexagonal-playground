@@ -5,6 +5,9 @@ plugins {
     id("io.spring.dependency-management")
     kotlin("jvm")
     kotlin("plugin.spring")
+
+    id ("org.jetbrains.kotlin.plugin.allopen")
+    id("org.jetbrains.kotlin.plugin.noarg")
 }
 
 allprojects {
@@ -25,7 +28,9 @@ configure(subprojects.filter { it.name !in nonDependentProjects }) {
     apply(plugin = "kotlin")
     apply(plugin = "kotlin-spring")
 
-    val springCloudVersion = "2021.0.2"
+    apply(plugin = "org.jetbrains.kotlin.plugin.allopen")
+    apply(plugin = "org.jetbrains.kotlin.plugin.noarg")
+
     val coroutineVersion = "1.6.3"
     val mockkVersion = "1.12.0"
     val kotestVersion = "5.3.2"
@@ -55,17 +60,18 @@ configure(subprojects.filter { it.name !in nonDependentProjects }) {
         testImplementation("io.kotest:kotest-property:$kotestVersion") // for kotest property test
         testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineVersion")
 
-        // Spring Cloud
-        implementation("org.springframework.cloud:spring-cloud-starter-config")
-
         // Annotation Processing Tool
         annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     }
 
-    dependencyManagement {
-        imports {
-            mavenBom("org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion")
-        }
+    noArg {
+        annotation("javax.persistence.Entity")
+    }
+
+    allOpen {
+        annotation("javax.persistence.Entity")
+        annotation("javax.persistence.MappedSuperclass")
+        annotation("javax.persistence.Embeddable")
     }
 
     tasks.withType<KotlinCompile> {
